@@ -82,28 +82,41 @@ public class Map implements Map2D, Serializable{
 	@Override
 	public int getPixel(int x, int y) {
         int ans = -1;
-
+        if(x>=0 && x<getWidth() && y>=0 && y<getHeight()) {
+            ans = this._map[x][y];
+        }
         return ans;
     }
 	@Override
 	public int getPixel(Pixel2D p) {
         int ans = -1;
-
+        if(isInside(p)==true) {
+            ans = getPixel(p.getX(),p.getY());
+        }
         return ans;
 	}
 	@Override
 	public void setPixel(int x, int y, int v) {
-
+        if(x>=0 && x<getWidth() && y>=0 && y<getHeight()) {
+            this._map[x][y] = v;
+        }
     }
 	@Override
 	public void setPixel(Pixel2D p, int v) {
-
+        if(isInside(p)){
+            setPixel(p.getX(),p.getY(),v);
+        }
 	}
 
     @Override
     public boolean isInside(Pixel2D p) {
         boolean ans = true;
-
+        if(p.getX()>=getWidth() || p.getX()<0){
+            ans = false;
+        }
+        if(p.getY()>=getHeight() || p.getY()<0){
+            ans = false;
+        }
         return ans;
     }
 
