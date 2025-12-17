@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Map implements Map2D, Serializable{
 
     // edit this class below
+    private int[][] _map;
 	/**
 	 * Constructs a w*h 2D raster map with an init value v.
 	 * @param w
@@ -32,28 +33,50 @@ public class Map implements Map2D, Serializable{
 	}
 	@Override
 	public void init(int w, int h, int v) {
-
+        this._map = new int[w][h];
+        for(int i=0;i<h;i++){
+            for(int j=0;j<w;j++) {
+                this._map[j][i] = v;
+            }
+        }
 	}
 	@Override
 	public void init(int[][] arr) {
-
+        if(arr==null || arr.length==0 || !isRectArray(arr)){
+            throw new RuntimeException("ERR: The entered array is invalid");
+        }
+        int w = arr.length;
+        int h = arr[0].length;
+        this._map = new int[w][h];
+        for(int i = 0;i<h;i++){
+            for(int j = 0;j<w;j++){
+                _map[j][i] = arr[j][i];
+            }
+        }
 	}
 	@Override
 	public int[][] getMap() {
 		int[][] ans = null;
-
+        int w = getWidth();
+        int h = getHeight();
+        ans = new int[w][h];
+        for(int i = 0;i<h;i++){
+            for(int j = 0;j<w;j++){
+                ans[j][i] = this._map[j][i];
+            }
+        }
 		return ans;
 	}
 	@Override
 	public int getWidth() {
         int ans = -1;
-
+        ans = this._map.length;
         return ans;
     }
 	@Override
 	public int getHeight() {
         int ans = -1;
-
+        ans = this._map[0].length;
         return ans;
     }
 	@Override
@@ -155,5 +178,15 @@ public class Map implements Map2D, Serializable{
         return ans;
     }
 	////////////////////// Private Methods ///////////////////////
-
+    private boolean isRectArray(int[][] arr){
+        boolean ans = true;
+        int row1 = arr[0].length;
+        for(int i = 1;i<arr.length;i++){
+            if(row1 != arr[i].length){
+                ans = false;
+                break;
+            }
+        }
+        return ans;
+    }
 }
