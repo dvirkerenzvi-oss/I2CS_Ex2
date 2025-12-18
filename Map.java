@@ -123,18 +123,32 @@ public class Map implements Map2D, Serializable{
     @Override
     public boolean sameDimensions(Map2D p) {
         boolean ans = false;
-
+        if(p!=null) {
+            if (getWidth() == p.getWidth() && getHeight() == p.getHeight()) {
+                ans = true;
+            }
+        }
         return ans;
     }
 
     @Override
     public void addMap2D(Map2D p) {
-
+        if(sameDimensions(p)){
+            for(int i=0;i<getWidth();i++){
+                for(int j=0;j<getHeight();j++){
+                    this._map[i][j] += p.getPixel(i,j);
+                }
+            }
+        }
     }
 
     @Override
     public void mul(double scalar) {
-
+        for(int i=0;i<getWidth();i++){
+            for(int j=0;j<getHeight();j++){
+                this._map[i][j] = (int) (scalar*this._map[i][j]);
+            }
+        }
     }
 
     @Override
@@ -144,7 +158,17 @@ public class Map implements Map2D, Serializable{
 
     @Override
     public void drawCircle(Pixel2D center, double rad, int color) {
-
+        int minX = (int) Math.max(0, center.getX()-rad);
+        int maxX = (int) Math.min(center.getX()+rad, getWidth());
+        int minY = (int) Math.max(0, center.getY()-rad);
+        int maxY = (int) Math.min(center.getY()+rad, getHeight());
+        for(int i=minX;i<maxX;i++){
+            for(int j=minY;j<maxY;j++){
+                if(distanceFromCenter(i,j,center)<=rad){
+                    this._map[i][j] = color;
+                }
+            }
+        }
     }
 
     @Override
@@ -200,6 +224,14 @@ public class Map implements Map2D, Serializable{
                 break;
             }
         }
+        return ans;
+    }
+    private double distanceFromCenter(int i, int j, Pixel2D center){
+        double ans = -1;
+        double x = center.getX()-i;
+        double y = center.getY()-j;
+        double dist = x*x+y*y;
+        ans = Math.sqrt(dist);
         return ans;
     }
 }
