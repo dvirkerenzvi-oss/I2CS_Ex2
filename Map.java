@@ -153,7 +153,17 @@ public class Map implements Map2D, Serializable{
 
     @Override
     public void rescale(double sx, double sy) {
-
+        int w = (int) (getWidth()*sx);
+        int h = (int) (getHeight()*sy);
+        int[][] changeMap = new int[w][h];
+        for(int i=0;i<w;i++){
+            for(int j=0;j<h;j++){
+                int x = (int) (i/sx);
+                int y = (int) (j/sy);
+                changeMap[i][j] = this._map[x][y];
+            }
+        }
+        this._map = changeMap;
     }
 
     @Override
@@ -173,18 +183,63 @@ public class Map implements Map2D, Serializable{
 
     @Override
     public void drawLine(Pixel2D p1, Pixel2D p2, int color) {
-
+        int dx = Math.abs(p2.getX()-p1.getX());
+        int dy = Math.abs(p2.getY()-p1.getY());
+        int x1 = p1.getX();
+        int x2 = p2.getX();
+        int y1 = p1.getY();
+        int y2 = p2.getY();
+        if(p1.equals(p2)){
+            setPixel(p1,color);
+        }
+        if(dx>=dy && x1<x2){
+            for(int i = x1;i<=x2;i++){
+                setPixel(i, (int) Math.round(f(p1, p2, i)), color);
+            }
+        }
+        if(dx>=dy && x1>x2) {
+            drawLine(p2, p1, color);
+        }
+        if(dx<dy && y1<y2){
+            for(int i = y1;i<=y2;i++){
+                setPixel((int) Math.round(g(p1, p2, i)), i, color);
+            }
+        }
+        if(dx<dy && y1>y2) {
+            drawLine(p2, p1, color);
+        }
     }
 
     @Override
     public void drawRect(Pixel2D p1, Pixel2D p2, int color) {
-
+        int maxX = Math.max(p1.getX(),p2.getX());
+        int minX = Math.min(p1.getX(),p2.getX());
+        int maxY = Math.max(p1.getY(),p2.getY());
+        int minY = Math.min(p1.getY(),p2.getY());
+        for(int i = minX;i<=maxX;i++){
+            for(int j = minY;j<=maxY;j++){
+                setPixel(i, j, color);
+            }
+        }
     }
 
     @Override
     public boolean equals(Object ob) {
         boolean ans = false;
-
+        if(ob instanceof Map2D){
+            Map2D object = (Map2D) ob;
+            if(sameDimensions(object)){
+                ans = true;
+                for(int i = 0;i<getWidth();i++){
+                    for(int j = 0;j<getHeight();j++){
+                        if(this._map[i][j]!=object.getPixel(i,j)){
+                            ans = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         return ans;
     }
 	@Override
@@ -233,5 +288,13 @@ public class Map implements Map2D, Serializable{
         double dist = x*x+y*y;
         ans = Math.sqrt(dist);
         return ans;
+    }
+    private double f(Pixel2D p1, Pixel2D p2, int x){
+        double a = (double) (p2.getY() - p1.getY()) /(p2.getX()-p1.getX());
+        return (double) p1.getY() + a*(x-p1.getX());
+    }
+    private double g(Pixel2D p1, Pixel2D p2, int y){
+        double a = (double) (p2.getX() - p1.getX()) /(p2.getY()-p1.getY());
+        return (double) p1.getX() + a*(y-p1.getY());
     }
 }
