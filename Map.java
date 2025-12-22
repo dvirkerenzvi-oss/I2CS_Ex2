@@ -249,7 +249,12 @@ public class Map implements Map2D, Serializable{
 	 */
 	public int fill(Pixel2D xy, int new_v,  boolean cyclic) {
 		int ans = -1;
-
+        int x = xy.getX();
+        int y = xy.getY();
+        int color = getPixel(xy);
+        if(getPixel(xy)!=new_v) {
+            ans = fillHelp(xy, color, new_v, cyclic);
+        }
 		return ans;
 	}
 
@@ -296,5 +301,40 @@ public class Map implements Map2D, Serializable{
     private double g(Pixel2D p1, Pixel2D p2, int y){
         double a = (double) (p2.getX() - p1.getX()) /(p2.getY()-p1.getY());
         return (double) p1.getX() + a*(y-p1.getY());
+    }
+    private int fillHelp(Pixel2D xy, int color, int new_v, boolean cyclic){
+        int ans = 0;
+        int x = xy.getX();
+        int y = xy.getY();
+        if(cyclic){
+            if(y>=getHeight()){
+                y = 0;
+            }
+            if(y<0){
+                y = getHeight()-1;
+            }
+            if(x>=getWidth()){
+                x = 0;
+            }
+            if(x<0){
+                x = getWidth()-1;
+            }
+            xy = new Index2D(x,y);
+        }
+        if(x>=0 && x<getWidth() && y>=0 && y<getHeight()){
+            if(getPixel(xy) == color) {
+                setPixel(xy, new_v);
+                ans = 1;
+                Pixel2D up = new Index2D(x, y + 1);
+                Pixel2D down = new Index2D(x, y - 1);
+                Pixel2D right = new Index2D(x + 1, y);
+                Pixel2D left = new Index2D(x - 1, y);
+                ans += fillHelp(up, color, new_v, cyclic);
+                ans += fillHelp(down, color, new_v, cyclic);
+                ans += fillHelp(right, color, new_v, cyclic);
+                ans += fillHelp(left, color, new_v, cyclic);
+            }
+        }
+        return ans;
     }
 }
