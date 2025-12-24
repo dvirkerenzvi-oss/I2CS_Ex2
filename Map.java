@@ -271,6 +271,20 @@ public class Map implements Map2D, Serializable{
     @Override
     public Map2D allDistance(Pixel2D start, int obsColor, boolean cyclic) {
         Map2D ans = null;  // the result.
+        ans = new Map(getWidth(), getHeight(), -2);
+        ans.setPixel(start,0);
+        for(int i=0;i<getWidth();i++){
+            for(int j=0;j<getHeight();j++){
+                if(_map[i][j]==obsColor){
+                    ans.setPixel(i,j,-1);
+                }
+            }
+        }
+        allDistanceHelp(up,start,cyclic);
+        int up = getPixel(start.getX(),start.getY()+1);
+        int down = getPixel(start.getX(),start.getY()-1);
+        int left = getPixel(start.getX()-1,start.getY());
+        int right = getPixel(start.getX()+1,start.getY());
 
         return ans;
     }
@@ -336,5 +350,37 @@ public class Map implements Map2D, Serializable{
             }
         }
         return ans;
+    }
+    private void allDistanceHelp(Pixel2D start, Map2D ans, boolean cyclic, int distance){
+        int x = start.getX();
+        int y = start.getY();
+        if(cyclic){
+            if(y+1>=ans.getHeight()){
+                y = -1;
+            }
+            if(y+1<0){
+                y = ans.getHeight()-1;
+            }
+            if(x>=ans.getWidth()){
+                x = 0;
+            }
+            if(x<0){
+                x = ans.getWidth()-1;
+            }
+            start = new Index2D(x,y);
+        }
+        if(x>=0 && x<ans.getWidth() && y>=0 && y<ans.getHeight() && ans.getPixel(start)!=-1){
+            if(ans.getPixel(start)==-2 || distance<ans.getPixel(start)){
+                ans.setPixel(start, distance);
+                Pixel2D up = new Index2D(x, y + 1);
+                Pixel2D down = new Index2D(x, y - 1);
+                Pixel2D right = new Index2D(x + 1, y);
+                Pixel2D left = new Index2D(x - 1, y);
+                allDistanceHelp(up, ans, cyclic, distance+1);
+                allDistanceHelp(down, ans, cyclic, distance+1);
+                allDistanceHelp(right, ans, cyclic, distance+1);
+                allDistanceHelp(left, ans, cyclic, distance+1);
+            }
+        }
     }
 }
