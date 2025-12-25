@@ -266,30 +266,34 @@ public class Map implements Map2D, Serializable{
 	public Pixel2D[] shortestPath(Pixel2D p1, Pixel2D p2, int obsColor, boolean cyclic) {
 		Pixel2D[] ans = null;  // the result.
         Map2D map1 = allDistance(p1, obsColor, cyclic);
-        if(map1.getPixel(p2)!=-2 || map1.getPixel(p2)!=-1) {
-            ans = new Pixel2D[map1.getPixel(p2)];
+        if(map1.getPixel(p2)!=-2 && map1.getPixel(p2)!=-1) {
+            ans = new Pixel2D[map1.getPixel(p2)+1];
             ans[map1.getPixel(p2)] = p2;
-            for(int i=ans.length-1;i>=0;i--){
+            for(int i=ans.length-2;i>=0;i--){
                 int x = p2.getX();
                 int y = p2.getY();
                 Pixel2D p = cyclic(x+1, y, cyclic);
                 if(map1.isInside(p) && map1.getPixel(p)==i){
                     ans[i] = p;
+                    p2 = p;
                     continue;
                 }
                 p = cyclic(x-1, y, cyclic);
                 if(map1.isInside(p) && map1.getPixel(p)==i){
                     ans[i] = p;
+                    p2 = p;
                     continue;
                 }
                 p = cyclic(x, y+1, cyclic);
                 if(map1.isInside(p) && map1.getPixel(p)==i){
                     ans[i] = p;
+                    p2 = p;
                     continue;
                 }
                 p = cyclic(x, y-1, cyclic);
                 if(map1.isInside(p) && map1.getPixel(p)==i){
                     ans[i] = p;
+                    p2 = p;
                 }
             }
         }
@@ -341,23 +345,9 @@ public class Map implements Map2D, Serializable{
     }
     private int fillHelp(Pixel2D xy, int color, int new_v, boolean cyclic){
         int ans = 0;
+        xy = cyclic(xy.getX(),xy.getY(),cyclic);
         int x = xy.getX();
         int y = xy.getY();
-        if(cyclic){
-            if(y>=getHeight()){
-                y = 0;
-            }
-            if(y<0){
-                y = getHeight()-1;
-            }
-            if(x>=getWidth()){
-                x = 0;
-            }
-            if(x<0){
-                x = getWidth()-1;
-            }
-            xy = new Index2D(x,y);
-        }
         if(x>=0 && x<getWidth() && y>=0 && y<getHeight()){
             if(getPixel(xy) == color) {
                 setPixel(xy, new_v);
@@ -375,23 +365,9 @@ public class Map implements Map2D, Serializable{
         return ans;
     }
     private void allDistanceHelp(Pixel2D start, Map2D ans, boolean cyclic, int distance){
+        start = cyclic(start.getX(), start.getY(), cyclic);
         int x = start.getX();
         int y = start.getY();
-        if(cyclic){
-            if(y>=ans.getHeight()){
-                y = 0;
-            }
-            if(y<0){
-                y = ans.getHeight()-1;
-            }
-            if(x>=ans.getWidth()){
-                x = 0;
-            }
-            if(x<0){
-                x = ans.getWidth()-1;
-            }
-            start = new Index2D(x,y);
-        }
         if(x>=0 && x<ans.getWidth() && y>=0 && y<ans.getHeight() && ans.getPixel(start)!=-1){
             if(ans.getPixel(start)==-2 || distance<ans.getPixel(start)){
                 ans.setPixel(start, distance);
