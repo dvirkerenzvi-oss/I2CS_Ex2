@@ -1,5 +1,8 @@
 package assignments.Ex2;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Intro2CS_2026A
  * This class represents a Graphical User Interface (GUI) for Map2D.
@@ -11,7 +14,7 @@ package assignments.Ex2;
  */
 public class Ex2_GUI {
     public static void drawMap(Map2D map) {
-        //
+
     }
 
     /**
@@ -30,8 +33,20 @@ public class Ex2_GUI {
      * @param mapFileName
      */
     public static void saveMap(Map2D map, String mapFileName) {
-
-
+        try {
+            FileWriter map2d = new FileWriter(mapFileName);
+            map2d.write(map.getWidth() + ",");
+            map2d.write(map.getHeight());
+            for(int i=0;i<map.getHeight();i++){
+                for(int j=0;j<map.getWidth();j++){
+                    map2d.write(map.getPixel(j,i) + " ");
+                }
+                map2d.write("\n");
+            }
+            map2d.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static void main(String[] a) {
         String mapFile = "map.txt";
