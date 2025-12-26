@@ -173,8 +173,8 @@ public class Map implements Map2D, Serializable{
         int maxX = (int) Math.min(center.getX()+rad, getWidth());
         int minY = (int) Math.max(0, center.getY()-rad);
         int maxY = (int) Math.min(center.getY()+rad, getHeight());
-        for(int i=minX;i<maxX;i++){
-            for(int j=minY;j<maxY;j++){
+        for(int i=minX;i<=maxX;i++){
+            for(int j=minY;j<=maxY;j++){
                 if(distanceFromCenter(i,j,center)<=rad){
                     this._map[i][j] = color;
                 }

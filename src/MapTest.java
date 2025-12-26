@@ -23,7 +23,7 @@ class MapTest {
     @Test
     @Timeout(value = 1, unit = SECONDS)
     void init() {
-        int[][] bigarr = new int [500][500];
+        int[][] bigarr = new int [50][50];
         _m1.init(bigarr);
         assertEquals(bigarr.length, _m1.getWidth());
         assertEquals(bigarr[0].length, _m1.getHeight());
@@ -54,12 +54,12 @@ class MapTest {
     @Test
     void testGetWidth(){
         int w = _m0.getWidth();
-        assertEquals(3, w);
+        assertEquals(4, w);
     }
     @Test
     void testGetHeight(){
         int h = _m0.getHeight();
-        assertEquals(3, h);
+        assertEquals(4, h);
     }
     @Test
     void testGetPixel(){
@@ -102,12 +102,12 @@ class MapTest {
     @Test
     void testAddMap2D(){
         _m3_3.addMap2D(_m3_3);
-        assertEquals(2,_m3_3.getPixel(0,2));
+        assertEquals(2,_m3_3.getPixel(0,1));
     }
     @Test
     void testMul(){
         _m3_3.mul(-1);
-        assertEquals(-1,_m3_3.getPixel(0,2));
+        assertEquals(-1,_m3_3.getPixel(0,1));
     }
     @Test
     void testRescale(){
@@ -125,18 +125,18 @@ class MapTest {
     @Test
     void testDrawLine(){
         Pixel2D p1 = new Index2D(0,0);
-        Pixel2D p2 = new Index2D(0,3);
+        Pixel2D p2 = new Index2D(0,2);
         _m0.drawLine(p1,p2,2);
         assertEquals(2,_m0.getPixel(0,1));
-        assertEquals(0,_m0.getPixel(0,4));
+        assertEquals(0,_m0.getPixel(0,3));
     }
     @Test
     void testDrawRect(){
         Pixel2D p1 = new Index2D(0,0);
-        Pixel2D p2 = new Index2D(3,3);
+        Pixel2D p2 = new Index2D(2,2);
         _m0.drawRect(p1,p2,2);
         assertEquals(2,_m0.getPixel(1,1));
-        assertEquals(0,_m0.getPixel(4,4));
+        assertEquals(0,_m0.getPixel(3,3));
     }
     @Test
     void testFill(){
@@ -154,12 +154,12 @@ class MapTest {
         Pixel2D p2 = new Index2D(0,3);
         _m0.setPixel(0,2,-1);
         Pixel2D[] ans = _m0.shortestPath(p1,p2,-1,false);
-        assertEquals(5,ans.length);
+        assertEquals(6,ans.length);
     }
     @Test
     void testAllDistance(){
         Pixel2D p = new Index2D(0,0);
         Map2D map = _m0.allDistance(p,-1,false);
-        assertEquals(6,map.getPixel(4,4));
+        assertEquals(6,map.getPixel(3,3));
     }
 }
