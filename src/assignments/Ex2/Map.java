@@ -1,4 +1,4 @@
-
+package assignments.Ex2;
 
 import java.io.Serializable;
 /**
@@ -248,7 +248,7 @@ public class Map implements Map2D, Serializable{
 	 * Fills this map with the new color (new_v) starting from p.
 	 * https://en.wikipedia.org/wiki/Flood_fill
 	 */
-	public int fill(Pixel2D xy, int new_v,  boolean cyclic) {
+	public int fill(Pixel2D xy, int new_v, boolean cyclic) {
 		int ans = -1;
         int x = xy.getX();
         int y = xy.getY();

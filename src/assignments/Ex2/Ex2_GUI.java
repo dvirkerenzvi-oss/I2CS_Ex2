@@ -1,10 +1,14 @@
+import assignments.Ex2.Map;
+import assignments.Ex2.Map2D;
+import assignments.Ex2.StdDraw;
+
 import java.awt.*;
 
 /**
  * Intro2CS_2026A
- * This class represents a Graphical User Interface (GUI) for Map2D.
+ * This class represents a Graphical User Interface (GUI) for assignments.Ex2.Map2D.
  * The class has save and load functions, and a GUI draw function.
- * You should implement this class, it is recommender to use the StdDraw class, as in:
+ * You should implement this class, it is recommender to use the assignments.Ex2.StdDraw class, as in:
  * <a href="https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html">...</a>
  *
  *

@@ -1,4 +1,4 @@
-
+package assignments.Ex2;
 
 /**
  * This interface represents a 2D map as a raster matrix, image or maze.
@@ -79,9 +79,9 @@ public interface Map2D {
     boolean isInside(Pixel2D p);
 
     /**
-     * This method returns true if and only if this Map2D has the same dimensions as p.
+     * This method returns true if and only if this assignments.Ex2.Map2D has the same dimensions as p.
      * @param p
-     * @return true if and only if this Map2D has the same dimensions as p.
+     * @return true if and only if this assignments.Ex2.Map2D has the same dimensions as p.
      */
     public boolean sameDimensions(Map2D p);
 
@@ -145,7 +145,7 @@ public interface Map2D {
 
     /**
      * @param m the reference object with which to compare.
-     * @return true if and only if this Map2D has the same (dimensions) and values.
+     * @return true if and only if this assignments.Ex2.Map2D has the same (dimensions) and values.
      */
     @Override
     public boolean equals(Object m);

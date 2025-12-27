@@ -1,4 +1,4 @@
-
+package assignments.Ex2;
 
 public class Index2D implements Pixel2D {
 
@@ -25,6 +25,9 @@ public class Index2D implements Pixel2D {
 
     @Override
     public double distance2D(Pixel2D p2) {
+        if(p2==null){
+            throw new RuntimeException("Error: p2 cannot be null");
+        }
         double dx = this.getX() - p2.getX();
         double dy = this.getY() - p2.getY();
         double t = (dx*dx+dy*dy);
@@ -46,8 +49,8 @@ public class Index2D implements Pixel2D {
         }
         else{
             Index2D p2 = (Index2D)p;
-            if(p2.getX()==this._x && p2.getY()==this._y){
-                ans = true;
+            if(p2.getX()!=this._x && p2.getY()!=this._y){
+                ans = false;
             }
         }
         return ans;
