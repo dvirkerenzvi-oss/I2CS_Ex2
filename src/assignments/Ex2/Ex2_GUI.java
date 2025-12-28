@@ -39,10 +39,6 @@ public static void drawMap(Map2D map) {
             else if(map.getPixel(i,j)==4){
                 StdDraw.setPenColor(StdDraw.BLUE);
             }
-            else{
-                int g = map.getPixel(i,j)%255;
-                StdDraw.setPenColor(new Color(0,g,255-g));
-            }
             StdDraw.filledSquare(i + 0.5, j + 0.5, 0.5);
             StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
             StdDraw.square(i + 0.5, j + 0.5, 0.5);
