@@ -66,7 +66,7 @@ public static Map2D loadMap(String mapFileName) {
         }
         scanner.close();
     } catch (IOException e) {
-        e.printStackTrace();;
+        e.printStackTrace();
     }
     return ans;
 }
@@ -145,6 +145,7 @@ void main() {
                     for(int i=0;i<shortestPath.length;i++){
                         map.setPixel(shortestPath[i], 4);
                     }
+
                 }
             }
             if(h==' '){
@@ -222,7 +223,7 @@ void main() {
                         }
                     }
                     if(w=='p'){
-                        map.setPixel(p0,-1);
+                        map.setPixel(p0,1);
                     }
                     if(w=='f' && map.getPixel(p0)!=-1){
                         map.fill(p0, 0, false);
