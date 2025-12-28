@@ -22,5 +22,7 @@ Run the `Ex2_GUI` class located in `assignments.Ex2`.
 
 ## 📸 Screenshots
 ![Maze](img_1.png)
+--- ---
 ![Solution](img_2.png)
+--- ---
 ![Shortest path](img_3.png)
