@@ -11,6 +11,13 @@ import java.awt.*;
  *
  *
  */
+
+/**
+ * Visualizes the current state of the map on the StdDraw window.
+ * Iterates through the map grid, assigns colors based on pixel values
+ * (e.g., walls, start/end points, path), and draws a grid overlay.
+ * @param map The map object to be drawn.
+ */
 public static void drawMap(Map2D map) {
     for(int j=0;j<map.getHeight();j++){
         for(int i=0;i< map.getWidth();i++){
@@ -45,8 +52,10 @@ public static void drawMap(Map2D map) {
 }
 
 /**
- * @param mapFileName
- * @return
+ * Loads a Map2D object from a specified text file.
+ * The method parses the file to get the width, height, and pixel data.
+ * @param mapFileName The name/path of the file to load.
+ * @return A new Map2D object populated with the data from the file, or null if an error occurs.
  */
 public static Map2D loadMap(String mapFileName) {
     Map2D ans = null;
@@ -72,9 +81,10 @@ public static Map2D loadMap(String mapFileName) {
 }
 
 /**
- *
- * @param map
- * @param mapFileName
+ * Saves the current Map2D object to a text file.
+ * Writes the map's dimensions followed by the matrix of pixel values.
+ * @param map The map object to save.
+ * @param mapFileName The name of the file to create/overwrite.
  */
 public static void saveMap(Map2D map, String mapFileName) {
     try {
@@ -91,7 +101,11 @@ public static void saveMap(Map2D map, String mapFileName) {
         e.printStackTrace();
     }
 }
-
+/**
+ * The main entry point of the application.
+ * Initializes the GUI window (canvas), sets up the map, and runs the infinite
+ * event loop that handles user inputs (mouse clicks for drawing, keyboard for modes).
+ */
 void main() {
     Map2D map = new Map(20,20,0);
     StdDraw.setCanvasSize(map.getWidth()*20,map.getHeight()*20);
