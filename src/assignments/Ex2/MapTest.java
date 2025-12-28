@@ -15,12 +15,22 @@ class MapTest {
      */
     private int[][] _map_3_3 = {{0,1,0}, {1,0,1}, {0,1,0}};
     private Map2D _m0, _m1, _m3_3;
+
+    /**
+     * Sets up the test environment before each test.
+     * Initializes standard maps (empty 4x4 and a specific 3x3 pattern) for reuse.
+     */
     @BeforeEach
     public void setup() {
         _m3_3 = new Map(_map_3_3);
         _m0 = new Map(4,4,0);
         _m1 = new Map(4,4,0);
     }
+
+    /**
+     * Tests initialization with a large array to ensure dimensions are set correctly.
+     * Also performs a basic check of the fill function.
+     */
     @Test
     @Timeout(value = 1, unit = SECONDS)
     void init() {
@@ -31,13 +41,18 @@ class MapTest {
         Pixel2D p1 = new Index2D(3,2);
         _m1.fill(p1,1, true);
     }
-
+    /**
+     * Verifies initialization from a specific 2D array and checks equality between two identical maps.
+     */
     @Test
     void testInit() {
         _m0.init(_map_3_3);
         _m1.init(_map_3_3);
         assertEquals(_m0, _m1);
     }
+    /**
+     * Tests the 'equals' method to ensure it correctly identifies identical and different maps.
+     */
     @Test
     void testEquals() {
         assertEquals(_m0,_m1);
@@ -45,6 +60,10 @@ class MapTest {
         _m1.init(_map_3_3);
         assertEquals(_m0,_m1);
     }
+    /**
+     * Verifies that getMap() returns a deep copy of the array.
+     * Changing the returned array should NOT affect the original map.
+     */
     @Test
     void testGetMap(){
         int[][] arr = _m0.getMap();
@@ -52,6 +71,7 @@ class MapTest {
         arr[1][1] = 1;
         Assertions.assertEquals(0,_m0.getPixel(0,0));
     }
+
     @Test
     void testGetWidth(){
         int w = _m0.getWidth();

@@ -41,6 +41,11 @@ public class Map implements Map2D, Serializable{
             }
         }
 	}
+
+    /**
+     * Initializes the map using a deep copy of the given 2D array.
+     * @param arr a 2D int array.
+     */
 	@Override
 	public void init(int[][] arr) {
         if(arr==null || arr.length==0 || !isRectArray(arr)){
@@ -55,6 +60,11 @@ public class Map implements Map2D, Serializable{
             }
         }
 	}
+
+    /**
+     * Returns a deep copy of the 2D map array.
+     * @return
+     */
 	@Override
 	public int[][] getMap() {
 		int[][] ans = null;
@@ -68,18 +78,35 @@ public class Map implements Map2D, Serializable{
         }
 		return ans;
 	}
+
+    /**
+     * Returns the width (number of columns) of the map.
+     * @return
+     */
 	@Override
 	public int getWidth() {
         int ans = -1;
         ans = this._map.length;
         return ans;
     }
+
+    /**
+     * Returns the height (number of rows) of the map.
+     * @return
+     */
 	@Override
 	public int getHeight() {
         int ans = -1;
         ans = this._map[0].length;
         return ans;
     }
+
+    /**
+     * Returns the value of the pixel at (x,y), or -1 if the coordinates are out of bounds.
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return
+     */
 	@Override
 	public int getPixel(int x, int y) {
         int ans = -1;
@@ -88,6 +115,12 @@ public class Map implements Map2D, Serializable{
         }
         return ans;
     }
+
+    /**
+     * Returns the value of the pixel at the given point, or -1 if out of bounds.
+     * @param p the x,y coordinate
+     * @return
+     */
 	@Override
 	public int getPixel(Pixel2D p) {
         int ans = -1;
@@ -96,12 +129,25 @@ public class Map implements Map2D, Serializable{
         }
         return ans;
 	}
+
+    /**
+     * Sets the value 'v' at coordinates (x,y) if they are within the map boundaries.
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param v the value that the entry at the coordinate [x][y] is set to.
+     */
 	@Override
 	public void setPixel(int x, int y, int v) {
         if(x>=0 && x<getWidth() && y>=0 && y<getHeight()) {
             this._map[x][y] = v;
         }
     }
+
+    /**
+     * Sets the value 'v' at the given point 'p' if it is inside the map.
+     * @param p the coordinate in the map.
+     * @param v the value that the entry at the coordinate [p.x][p.y] is set to.
+     */
 	@Override
 	public void setPixel(Pixel2D p, int v) {
         if(isInside(p)){
@@ -109,6 +155,11 @@ public class Map implements Map2D, Serializable{
         }
 	}
 
+    /**
+     * Checks if the given point is within the map boundaries.
+     * @param p the 2D coordinate.
+     * @return
+     */
     @Override
     public boolean isInside(Pixel2D p) {
         boolean ans = true;
@@ -121,6 +172,11 @@ public class Map implements Map2D, Serializable{
         return ans;
     }
 
+    /**
+     * Checks if the given map has the same width and height as this map.
+     * @param p
+     * @return
+     */
     @Override
     public boolean sameDimensions(Map2D p) {
         boolean ans = false;
@@ -132,6 +188,10 @@ public class Map implements Map2D, Serializable{
         return ans;
     }
 
+    /**
+     * Adds the values of the given map to this map (element-wise), if dimensions match.
+     * @param p - the map that should be added to this map (just in case they have the same dimensions).
+     */
     @Override
     public void addMap2D(Map2D p) {
         if(sameDimensions(p)){
@@ -143,6 +203,10 @@ public class Map implements Map2D, Serializable{
         }
     }
 
+    /**
+     * Multiplies every value in the map by the given scalar.
+     * @param scalar
+     */
     @Override
     public void mul(double scalar) {
         for(int i=0;i<getWidth();i++){
@@ -152,6 +216,11 @@ public class Map implements Map2D, Serializable{
         }
     }
 
+    /**
+     * Resizes the map based on scaling factors sx (width) and sy (height).
+     * @param sx
+     * @param sy
+     */
     @Override
     public void rescale(double sx, double sy) {
         int w = (int) (getWidth()*sx);
@@ -167,6 +236,12 @@ public class Map implements Map2D, Serializable{
         this._map = changeMap;
     }
 
+    /**
+     * Draws a filled circle around the center point with the specified radius and color.
+     * @param center
+     * @param rad
+     * @param color - the (new) color to be used in the drawing.
+     */
     @Override
     public void drawCircle(Pixel2D center, double rad, int color) {
         int minX = (int) Math.max(0, center.getX()-rad);
@@ -182,6 +257,12 @@ public class Map implements Map2D, Serializable{
         }
     }
 
+    /**
+     * Draws a line segment between p1 and p2 using the specified color.
+     * @param p1
+     * @param p2
+     * @param color - the (new) color to be used in the drawing.
+     */
     @Override
     public void drawLine(Pixel2D p1, Pixel2D p2, int color) {
         int dx = Math.abs(p2.getX()-p1.getX());
@@ -211,6 +292,12 @@ public class Map implements Map2D, Serializable{
         }
     }
 
+    /**
+     * Draws a filled rectangle defined by two opposite corners (p1, p2) with the given color.
+     * @param p1
+     * @param p2
+     * @param color - the (new) color to be used in the drawing.
+     */
     @Override
     public void drawRect(Pixel2D p1, Pixel2D p2, int color) {
         int maxX = Math.max(p1.getX(),p2.getX());
@@ -224,6 +311,11 @@ public class Map implements Map2D, Serializable{
         }
     }
 
+    /**
+     * Checks if this map is equal to another object (same dimensions and same pixel values).
+     * @param ob the reference object with which to compare.
+     * @return
+     */
     @Override
     public boolean equals(Object ob) {
         boolean ans = false;
@@ -300,6 +392,15 @@ public class Map implements Map2D, Serializable{
         }
 		return ans;
 	}
+
+    /**
+     * Generates a new map where each pixel represents its distance from the start point.
+     * Obstacles are marked with -1, and unreachable areas with -2.
+     * @param start the source (starting) point
+     * @param obsColor the color representing obstacles
+     * @param cyclic
+     * @return
+     */
     @Override
     public Map2D allDistance(Pixel2D start, int obsColor, boolean cyclic) {
         Map2D ans = null;  // the result.
@@ -317,6 +418,11 @@ public class Map implements Map2D, Serializable{
         return ans;
     }
 	////////////////////// Private Methods ///////////////////////
+    /**
+     * Helper: Checks if a 2D array is jagged (irregular) or rectangular.
+     * @param arr
+     * @return
+     */
     private boolean isRectArray(int[][] arr){
         boolean ans = true;
         int row1 = arr[0].length;
@@ -328,6 +434,14 @@ public class Map implements Map2D, Serializable{
         }
         return ans;
     }
+
+    /**
+     * Helper: Calculates the Euclidean distance between a point (i,j) and the center.
+     * @param i
+     * @param j
+     * @param center
+     * @return
+     */
     private double distanceFromCenter(int i, int j, Pixel2D center){
         double ans = -1;
         double x = center.getX()-i;
@@ -336,14 +450,39 @@ public class Map implements Map2D, Serializable{
         ans = Math.sqrt(dist);
         return ans;
     }
+
+    /**
+     * Helper: Linear function calculation for Y coordinate based on X (y = mx + b).
+     * @param p1
+     * @param p2
+     * @param x
+     * @return
+     */
     private double f(Pixel2D p1, Pixel2D p2, int x){
         double a = (double) (p2.getY() - p1.getY()) /(p2.getX()-p1.getX());
         return (double) p1.getY() + a*(x-p1.getX());
     }
+
+    /**
+     * Helper: Linear function calculation for X coordinate based on Y (x = my + b).
+     * @param p1
+     * @param p2
+     * @param y
+     * @return
+     */
     private double g(Pixel2D p1, Pixel2D p2, int y){
         double a = (double) (p2.getX() - p1.getX()) /(p2.getY()-p1.getY());
         return (double) p1.getX() + a*(y-p1.getY());
     }
+
+    /**
+     * Recursive helper function for the Flood Fill algorithm.
+     * @param xy
+     * @param color
+     * @param new_v
+     * @param cyclic
+     * @return
+     */
     private int fillHelp(Pixel2D xy, int color, int new_v, boolean cyclic){
         int ans = 0;
         xy = cyclic(xy.getX(),xy.getY(),cyclic);
@@ -365,6 +504,14 @@ public class Map implements Map2D, Serializable{
         }
         return ans;
     }
+
+    /**
+     * Recursive helper function for calculating all distances (BFS logic).
+     * @param start
+     * @param ans
+     * @param cyclic
+     * @param distance
+     */
     private void allDistanceHelp(Pixel2D start, Map2D ans, boolean cyclic, int distance){
         start = cyclic(start.getX(), start.getY(), cyclic);
         int x = start.getX();
@@ -383,6 +530,14 @@ public class Map implements Map2D, Serializable{
             }
         }
     }
+
+    /**
+     * Helper: Adjusts coordinates for cyclic (toroidal) map behavior.
+     * @param x
+     * @param y
+     * @param cyclic
+     * @return
+     */
     private Pixel2D cyclic(int x, int y, boolean cyclic){
         if(cyclic){
             if(y>=getHeight()){
