@@ -125,33 +125,40 @@ void main() {
             if(h=='m'){
                 if(mode==1){
                     mode=0;
-                    System.out.println("mode change to 0");
+                    System.out.print("\rmode change to 0" + "                 ");
                 }
                 else{
                     mode=1;
-                    System.out.println("mode change to 1");
+                    System.out.print("\rmode change to 1" + "                 ");
                 }
             }
             if(h=='p'){
                 w='p';
+                System.out.print("\rThe tool has been changed to a point" + "                 ");
             }
             if(h=='f'){
                 w='f';
+                System.out.print("\rThe tool has been changed to delete" + "                 ");
             }
             if(h=='s'){
                 w='s';
+                System.out.print("\rChoose a starting point" + "                 ");
             }
             if(h=='e'){
                 w='e';
+                System.out.print("\rChoose an ending point" + "                 ");
             }
             if(h=='l'){
                 w='l';
+                System.out.print("\rThe tool has been changed to a line" + "                 ");
             }
             if(h=='c'){
                 w='c';
+                System.out.print("\rThe tool has been changed to a circle" + "                 ");
             }
             if(h=='r'){
                 w='r';
+                System.out.print("\rThe tool has been changed to a rectangle" + "                 ");
             }
             if(h=='0'){
                 Pixel2D[] shortestPath = map.shortestPath(s,e,-1,false);
@@ -159,7 +166,11 @@ void main() {
                     for(int i=0;i<shortestPath.length;i++){
                         map.setPixel(shortestPath[i], 4);
                     }
-
+                    map.setPixel(s,2);
+                    map.setPixel(e,3);
+                }
+                else{
+                    System.out.println("There is no path!" + "                 ");
                 }
             }
             if(h==' '){
@@ -167,14 +178,29 @@ void main() {
                 p1 = null;
                 s = null;
                 e = null;
+                System.out.print("\rThe map has been cleared" + "                 ");
             }
             if(h=='a'){
                 saveMap(map, "map.txt");
+                System.out.print("Map saved successfully" + "                 ");
             }
             if(h=='y'){
                 Map2D newMap = loadMap("map.txt");
                 if(newMap!=null) {
                     map = newMap;
+                    System.out.print("\rMap loaded successfully from map.txt" + "                 ");
+                    for (int i = 0; i < map.getWidth(); i++) {
+                        for (int j = 0; j < map.getHeight(); j++) {
+                            int pixelValue = map.getPixel(i, j);
+
+                            if (pixelValue == 2) { // מצאנו התחלה (ירוק)
+                                s = new Index2D(i, j);
+                            }
+                            if (pixelValue == 3) { // מצאנו סוף (אדום)
+                                e = new Index2D(i, j);
+                            }
+                        }
+                    }
                 }
             }
         }
